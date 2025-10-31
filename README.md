@@ -27,5 +27,24 @@ If Maven is not installed in your environment, you can compile and run the sourc
 Notes
 - The project includes both MySQL and PostgreSQL JDBC drivers. Choose the appropriate JDBC URL in `config/db.properties`.
 - The create-table DDL adapts for MySQL (AUTO_INCREMENT) vs PostgreSQL (SERIAL) based on the JDBC URL.
+
+Environment variables
+You can alternatively provide configuration through environment variables. The app looks for these variables when `config/db.properties` is not present or doesn't contain values:
+
+- `DB_URL` — JDBC URL (required)
+- `DB_USER` — DB username (optional if embedded auth used)
+- `DB_PASSWORD` — DB password
+- `DB_DRIVER` — JDBC driver class name (optional; drivers are on the classpath)
+
+Example (bash):
+
+```bash
+export DB_URL="jdbc:postgresql://localhost:5432/employees_db"
+export DB_USER=postgres
+export DB_PASSWORD=secret
+mvn -DskipTests package
+mvn exec:java -Dexec.mainClass="com.example.employeedb.Main"
+```
+
 # Employee-Database-App
 Master JDBC Connectivity

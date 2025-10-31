@@ -7,13 +7,13 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Path cfgPath = Path.of("config", "db.properties");
-        System.out.println("Loading DB config from: " + cfgPath.toAbsolutePath());
+        System.out.println("Loading DB config from: " + cfgPath.toAbsolutePath() + " (or from environment variables DB_URL, DB_USER, DB_PASSWORD, DB_DRIVER)");
         DbConfig cfg;
         try {
             cfg = DbConfig.loadFromFile(cfgPath);
         } catch (Exception e) {
-            System.err.println("Failed to load config file: " + e.getMessage());
-            System.err.println("Please copy and edit config/db.properties with your DB connection details.");
+            System.err.println("Configuration error: " + e.getMessage());
+            System.err.println("Set the JDBC URL in config/db.properties or set environment variable DB_URL. Example MySQL URL: jdbc:mysql://localhost:3306/employees_db");
             return;
         }
 
